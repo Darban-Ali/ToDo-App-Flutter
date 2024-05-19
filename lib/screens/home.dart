@@ -1,8 +1,4 @@
-import 'dart:html';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:to_do_app/constants/menu.dart';
 import '../models/todo.dart';
 import '../constants/todo_items.dart';
@@ -18,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final todoList = ToDo.todoList();
   final todoController = TextEditingController();
   List<ToDo> foundToDo = [];
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -28,18 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 228, 228, 228),
+      backgroundColor: const Color.fromARGB(255, 228, 228, 228),
       appBar: _buildAppBar(),
-      drawer: SideDrawer(),
+      drawer: const SideDrawer(),
       body: Stack(
         children: [
           Positioned.fill(
-              child: Image.asset(
-            'assets/images/nahil-naseer-xljtGZ2-P3Y-unsplash.jpg',
-            fit: BoxFit.cover,
-          )),
+            child: Container(color: Colors.white),
+          ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Column(
               children: [
                 SearchBox(),
@@ -47,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 35, bottom: 20),
-                        child: Text(
+                        margin: const EdgeInsets.only(top: 35, bottom: 20),
+                        child: const Text(
                           'All To Dos',
                           style: TextStyle(
                             color: Colors.white,
@@ -74,10 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(children: [
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  margin:
+                      const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(109, 54, 92, 55),
+                    color: Colors.grey.shade200,
                     boxShadow: const [
                       BoxShadow(
                         color: Color.fromARGB(255, 48, 43, 43),
@@ -87,24 +84,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: TextField(
-                    controller: todoController,
-                    decoration: InputDecoration(
-                        hintText:
-                            'Try typing "Pay utilities bill by Friday 6PM"',
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(
-                            color: const Color.fromARGB(255, 196, 194, 194))),
+                  child: Form(
+                    key: formkey,
+                    child: TextFormField(
+                      controller: todoController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter name';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          hintText:
+                              'Try typing "Pay utilities bill by Friday 6PM"',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                              color: Color.fromARGB(255, 196, 194, 194))),
+                    ),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 20, right: 20),
+                margin: const EdgeInsets.only(bottom: 20, right: 20),
                 child: ElevatedButton(
-                  onPressed: () {
-                    addToDoItem(todoController.text);
+                  onPressed: () async {
+                    if (formkey.currentState!.validate()) {
+                      addToDoItem(todoController.text);
+                    }
                   },
-                  child: Text(
+                  child: const Text(
                     '+',
                     style: TextStyle(
                       fontSize: 40,
@@ -159,15 +167,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget SearchBox() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      margin: EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
         onChanged: (value) => runFilter(value),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(
             Icons.search,
@@ -186,15 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar _buildAppBar() {
     return AppBar(
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 228, 228, 228),
+        backgroundColor: Colors.white,
         title: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           Container(
               height: 40,
               width: 40,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child:
-                    Image.asset("assets/images/GitHub-Mark-ea2971cee799.png"),
+                child: Icon(Icons.person_2, color: Colors.black, size: 20),
               ))
         ]));
   }

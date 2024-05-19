@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/screens/home.dart';
 import 'package:to_do_app/screens/myday.dart';
@@ -9,19 +8,18 @@ class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 228, 228, 228),
+      backgroundColor: Colors.white,
       child: ListView(
         children: <Widget>[
           const DrawerHeader(
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 228, 228, 228)),
+              decoration: BoxDecoration(color: Colors.white),
               child: Text(
                 "My To Do App",
                 style: TextStyle(
                     fontSize: 24, color: Color.fromARGB(255, 0, 0, 0)),
               )),
           ListTile(
-            title: Text(
+            title: const Text(
               "Home",
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
             ),
@@ -34,7 +32,7 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(
+            title: const Text(
               "My Day",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
@@ -42,11 +40,11 @@ class SideDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MyDay()));
+                  .push(MaterialPageRoute(builder: (context) => const MyDay()));
             },
           ),
           ListTile(
-            title: Text(
+            title: const Text(
               "Important",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
@@ -56,7 +54,7 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(
+            title: const Text(
               "Sttings",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
