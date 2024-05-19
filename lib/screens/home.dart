@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:to_do_app/constants/menu.dart';
 import '../models/todo.dart';
 import '../constants/todo_items.dart';
 
@@ -27,8 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 228, 228, 228),
       appBar: _buildAppBar(),
+      drawer: SideDrawer(),
       body: Stack(
         children: [
+          Positioned.fill(
+              child: Image.asset(
+            'assets/images/nahil-naseer-xljtGZ2-P3Y-unsplash.jpg',
+            fit: BoxFit.cover,
+          )),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Column(
@@ -42,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           'All To Dos',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       for (ToDo todoo in foundToDo.reversed)
@@ -65,12 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color.fromARGB(109, 54, 92, 55),
                     boxShadow: const [
                       BoxShadow(
-                        color: Colors.grey,
+                        color: Color.fromARGB(255, 48, 43, 43),
                         offset: Offset(0.0, 0.0),
-                        blurRadius: 10.0,
                         spreadRadius: 0.0,
                       )
                     ],
@@ -79,9 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextField(
                     controller: todoController,
                     decoration: InputDecoration(
-                      hintText: 'Add a new To Do activity',
-                      border: InputBorder.none,
-                    ),
+                        hintText:
+                            'Try typing "Pay utilities bill by Friday 6PM"',
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                            color: const Color.fromARGB(255, 196, 194, 194))),
                   ),
                 ),
               ),
@@ -174,21 +187,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBar(
         elevation: 0,
         backgroundColor: Color.fromARGB(255, 228, 228, 228),
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 30,
-              ),
-              Container(
-                  height: 40,
-                  width: 40,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset("images/GitHub-Mark-ea2971cee799.png"),
-                  ))
-            ]));
+        title: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+          Container(
+              height: 40,
+              width: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child:
+                    Image.asset("assets/images/GitHub-Mark-ea2971cee799.png"),
+              ))
+        ]));
   }
 }
