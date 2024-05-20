@@ -14,7 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final todoList = ToDo.todoList();
   final todoController = TextEditingController();
   List<ToDo> foundToDo = [];
+  // ToDo? editingToDo;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  get todoo => null;
 
   @override
   void initState() {
@@ -46,17 +49,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Text(
                           'All To Dos',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26,
+                            color: Color.fromARGB(255, 24, 23, 23),
+                            fontSize: 24,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                       for (ToDo todoo in foundToDo.reversed)
+                        // ListTile(
+                        //   title:
+                        //       editingToDo != null && editingToDo!.id == todoo.id
+                        //           ? TextField(
+                        //               controller: TextEditingController(
+                        //                   text: editingToDo?.todoText ?? ''),
+                        //               onSubmitted: (newValue) {
+                        //                 handleEdit(todoo, newValue);
+                        //               },
+                        //             )
+                        //           : Text(
+                        //               todoo.todoText ?? '',
+                        //               style: TextStyle(
+                        //                 color: Colors.white,
+                        //               ),
+                        //             ),
+                        // ),
                         ToDoItem(
                           todo: todoo,
                           onToDoChanged: handleToDoChange,
                           onDeleteItem: handleDelete,
+                          onEditItem: handleEdit,
                         ),
                     ],
                   ),
@@ -78,8 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     boxShadow: const [
                       BoxShadow(
                         color: Color.fromARGB(255, 48, 43, 43),
-                        offset: Offset(0.0, 0.0),
-                        spreadRadius: 0.0,
                       )
                     ],
                     borderRadius: BorderRadius.circular(10),
@@ -90,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: todoController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter name';
+                          return 'Please enter the task first';
                         }
                         return null;
                       },
@@ -138,6 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       todoList.removeWhere((item) => item.id == id);
     });
+  }
+
+  void handleEdit(ToDo todoo, String newValue) {
+    // setState(() {
+    //   todoo.todoText = newValue;
+    // });
   }
 
   void addToDoItem(String toDo) {
